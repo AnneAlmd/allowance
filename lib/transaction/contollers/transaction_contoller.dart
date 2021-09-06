@@ -1,7 +1,7 @@
 import 'package:allowance/transaction/models/models.dart';
 
 class TransactionController {
-  var transactions = [
+  var _transactions = [
     TransactionModel(
       id: 1,
       title: 'Açai',
@@ -15,7 +15,27 @@ class TransactionController {
       date: DateTime.now(),
     ),
   ];
-  void addTransaction(TransactionModel item) {
-    transactions.add(item);
+  List<TransactionModel> get transactionsList => _transactions;
+
+  void addTransaction(
+      {required int id,
+      required String title,
+      required String amount,
+      required String date}) {
+    try {
+      var itemId = _transactions.length;
+      var itemAmount = double.parse(amount);
+      var itemDate = DateTime.parse(date);
+
+      final item = TransactionModel(
+        id: itemId,
+        title: title,
+        amount: itemAmount,
+        date: itemDate,
+      );
+      _transactions.add(item);
+    } catch (e) {
+      throw Exception('Something Wrong: $e');
+    }
   }
 }

@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AddTransaction extends StatelessWidget {
-  const AddTransaction({
-    Key? key,
-  }) : super(key: key);
+class AddTransaction extends StatefulWidget {
+  final Function addTransaction;
+
+  const AddTransaction({required this.addTransaction});
+  @override
+  _AddTransactionState createState() => _AddTransactionState();
+}
+
+class _AddTransactionState extends State<AddTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
+
+  final dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +22,10 @@ class AddTransaction extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TextField(
+            controller: titleController,
             decoration: InputDecoration(
               labelText: 'Title:',
               contentPadding:
@@ -21,6 +33,8 @@ class AddTransaction extends StatelessWidget {
             ),
           ),
           TextField(
+            keyboardType: TextInputType.number,
+            controller: amountController,
             decoration: InputDecoration(
               labelText: 'Amount:',
               contentPadding:
@@ -28,6 +42,7 @@ class AddTransaction extends StatelessWidget {
             ),
           ),
           TextField(
+            //controller: dateItem,
             decoration: InputDecoration(
               labelText: 'Date Picker:',
               contentPadding:
@@ -37,9 +52,17 @@ class AddTransaction extends StatelessWidget {
           TextButton(
             style: TextButton.styleFrom(alignment: Alignment.bottomRight),
             onPressed: () {
+              print(amountController.text);
+              print(titleController.text);
+              widget.addTransaction(
+                amount: amountController.text,
+                title: titleController.text,
+                id: 1,
+                date: DateTime.now().toString(),
+              );
               Navigator.pop(context);
             },
-            child: Text('Save'),
+            child: Text('Save Transaction'),
           ),
         ],
       ),
