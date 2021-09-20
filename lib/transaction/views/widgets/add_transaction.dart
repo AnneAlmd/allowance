@@ -1,14 +1,8 @@
+import 'package:allowance/transaction/controllers/controllers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AddTransaction extends StatefulWidget {
-  final Function addTransaction;
-
-  const AddTransaction({required this.addTransaction});
-  @override
-  _AddTransactionState createState() => _AddTransactionState();
-}
-
-class _AddTransactionState extends State<AddTransaction> {
+class AddTransaction extends StatelessWidget {
   final titleController = TextEditingController();
 
   final amountController = TextEditingController();
@@ -52,14 +46,12 @@ class _AddTransactionState extends State<AddTransaction> {
           TextButton(
             style: TextButton.styleFrom(alignment: Alignment.bottomRight),
             onPressed: () {
-              print(amountController.text);
-              print(titleController.text);
-              widget.addTransaction(
-                amount: amountController.text,
-                title: titleController.text,
-                id: 1,
-                date: DateTime.now().toString(),
-              );
+              context.read<TransactionController>().addTransaction(
+                    amount: amountController.text,
+                    title: titleController.text,
+                    id: 1,
+                    date: DateTime.now().toString(),
+                  );
               Navigator.pop(context);
             },
             child: Text('Save Transaction'),

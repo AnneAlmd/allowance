@@ -1,46 +1,19 @@
+import 'package:allowance/transaction/controllers/controllers.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-import 'package:allowance/transaction/models/transaction_model.dart';
+import 'widgets.dart';
 
 class TransactionList extends StatelessWidget {
-  const TransactionList({
-    Key? key,
-    required this.transactions,
-  }) : super(key: key);
-
-  final List<TransactionModel> transactions;
-
-  @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          ...transactions.map(
-            (e) {
-              return ListTile(
-                leading: Chip(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  elevation: 5,
-                  labelPadding: EdgeInsets.all(15),
-                  shape: CircleBorder(
-                    side: BorderSide.none,
-                  ),
-                  label: Text(
-                    '\$${e.amount}',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                title: Text(e.title),
-                subtitle: Text(
-                  DateFormat('dd MMM').format(e.date),
-                ),
-              );
-            },
-          ),
-        ],
+    var itensList = context.watch<TransactionController>().transactionsList;
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return ListItem(e: itensList[index]);
+        },
+        itemCount: itensList.length,
       ),
     );
   }
