@@ -3,53 +3,53 @@ import 'package:intl/intl.dart';
 import 'package:allowance/transaction/models/models.dart';
 
 class TransactionController with ChangeNotifier {
-  var allowance = AllowanceModel.allowanceValue;
+  var _allowance = AllowanceModel();
 
   var _transactions = [
-    TransactionModel(
-      id: 1,
-      title: 'Açai',
-      amount: 100.00,
-      date: DateTime.now().subtract(Duration(days: 5)),
-    ),
-    TransactionModel(
-      id: 2,
-      title: 'Tattoo',
-      amount: 20.00,
-      date: DateTime.now().subtract(Duration(days: 2)),
-    ),
-    TransactionModel(
-      id: 3,
-      title: 'chocolate',
-      amount: 20.00,
-      date: DateTime.now().subtract(Duration(days: 7)),
-    ),
-    TransactionModel(
-      id: 4,
-      title: 'Sorvete',
-      amount: 25.00,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    TransactionModel(
-      id: 5,
-      title: 'Tat',
-      amount: 100.00,
-      date: DateTime.now().subtract(Duration(days: 1)),
-    ),
-    TransactionModel(
-      id: 6,
-      title: 'choco',
-      amount: 20.00,
-      date: DateTime.now().subtract(Duration(days: 6)),
-    ),
-    TransactionModel(
-      id: 7,
-      title: 'Sorte',
-      amount: 55.55,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
+    // TransactionModel(
+    //   id: 1,
+    //   title: 'Açai',
+    //   amount: 10.00,
+    //   date: DateTime.now().subtract(Duration(days: 5)),
+    // ),
+    // TransactionModel(
+    //   id: 2,
+    //   title: 'Tattoo',
+    //   amount: 20.00,
+    //   date: DateTime.now().subtract(Duration(days: 2)),
+    // ),
+    // TransactionModel(
+    //   id: 3,
+    //   title: 'chocolate',
+    //   amount: 20.00,
+    //   date: DateTime.now().subtract(Duration(days: 7)),
+    // ),
+    // TransactionModel(
+    //   id: 4,
+    //   title: 'Sorvete',
+    //   amount: 25.00,
+    //   date: DateTime.now().subtract(Duration(days: 4)),
+    // ),
+    // TransactionModel(
+    //   id: 5,
+    //   title: 'Tat',
+    //   amount: 100.00,
+    //   date: DateTime.now().subtract(Duration(days: 1)),
+    // ),
+    // TransactionModel(
+    //   id: 6,
+    //   title: 'choco',
+    //   amount: 20.00,
+    //   date: DateTime.now().subtract(Duration(days: 6)),
+    // ),
+    // TransactionModel(
+    //   id: 7,
+    //   title: 'Sorte',
+    //   amount: 55.55,
+    //   date: DateTime.now().subtract(Duration(days: 3)),
+    // ),
   ];
-  List<TransactionModel> get transactionsList {
+  List<dynamic> get transactionsList {
     _transactions.sort((a, b) => b.date.compareTo(a.date));
     return _transactions;
   }
@@ -102,6 +102,13 @@ class TransactionController with ChangeNotifier {
     groupedTransactions.forEach((element) {
       expenses += element['amount'] as double;
     });
-    return allowance - expenses;
+    return _allowance.allowanceGet - expenses;
+  }
+
+  double allowanceValue() => _allowance.allowanceGet;
+
+  void allowanceAdd(double value) {
+    _allowance.allowanceSet(value);
+    notifyListeners();
   }
 }

@@ -1,4 +1,4 @@
-import 'package:allowance/pages/home.dart';
+import 'package:allowance/pages/pages.dart';
 import 'package:allowance/transaction/controllers/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +22,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: myTheme,
       home: Home(),
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        //'/': (context) => Home(),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/transactions': (context) => TransactionsPage(),
+      },
     );
   }
 }
